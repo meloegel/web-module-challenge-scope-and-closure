@@ -27,11 +27,11 @@ function processFirstItem(stringList, callback) {
  * Study the code for counter1 and counter2. Answer the questions below.
  * 
  * 1. What is the difference between counter1 and counter2?
- * 
+ * the first counter uses closure and second does not. and count has a global scope in the second counter.
  * 2. Which of the two uses a closure? How can you tell?
- * 
+ * first one uses closeure because it is putting two function together.
  * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better? 
- *
+ *the first is preferable if you would like to apply it to other counters and the 2nd would be better if you needed to access the count in other counters
 */
 
 // counter1 code
@@ -56,11 +56,10 @@ function counter2() {
 
 Write a function called `inning` that generates a random number of points that a team scored in an inning. This should be a whole number between 0 and 2. */
 
-function inning(/*Code Here*/){
-
-    /*Code Here*/
-
+function inning(){
+  return Math.floor(Math.random() * 3);
 }
+console.log(inning())
 
 /* Task 3: finalScore()
 
@@ -76,11 +75,17 @@ finalScore(inning, 9) might return:
 
 */ 
 
-function finalScore(/*code Here*/){
-
-  /*Code Here*/
-
+function finalScore(inning, numberOfInnings){
+let homeScore = numberOfInnings + inning();
+let awayScore = numberOfInnings + inning();
+let score = {
+  "Home": homeScore,
+  "Away": awayScore,
 }
+  return score;
+}
+
+console.log(finalScore(inning, 9));
 
 /* Task 4: 
 
@@ -104,8 +109,34 @@ and returns the score at each pont in the game, like so:
 
 Final Score: awayTeam - homeTeam */
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+
+function getInningScore(eachInning){
+  return {
+    Home: eachInning(),
+    Away: eachInning(),
+  }
 }
+
+
+
+function scoreboard(getInn, inning, numberOfInnings) {
+  let arr = []
+  let homeScore = 0;
+  let awayScore = 0;
+  for (let i = 0; i < numberOfInnings; i++) {
+    let currentInn = getInn(inning)
+    homeScore = homeScore + currentInn.Home
+    awayScore = awayScore = currentInn.Away;
+    arr.push(`inning ${i + 1}: awayTeam ${currentInn.Away} - homeTeam ${currentInn.Home}`)
+  }
+  if (homeScore === awayScore) {
+    arr.push(`This game will require extra innings: awayTeam ${awayScore} - homeTeam ${homeScore}`)
+  } else {
+    arr.push(`Final Score: awayTeam ${awayScore} - homeTeam ${homeScore}`)
+  }
+  return arr;
+}
+
+console.log(scoreboard(getInningScore, inning, 9))
 
 
